@@ -5,8 +5,5 @@ import viteTestPlugin from 'vite-plugin-test'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    viteTestPlugin(),
-  ]
+  plugins: [vue(), viteTestPlugin()],
 })

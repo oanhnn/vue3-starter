@@ -1,9 +1,10 @@
 import { mount } from '@vue/test-utils'
-import App from '@/src/App.vue'
+import { expect } from 'chai'
+import App from '@/App.vue'
 
 describe('App.spec.js', () => {
   it('renders', async () => {
-    const wrapper = mount(App, { attachTo: '#app' })
+    const wrapper = await mount(App, { attachTo: '#app' })
     expect(wrapper.html()).to.contain('Hello')
   })
 })
