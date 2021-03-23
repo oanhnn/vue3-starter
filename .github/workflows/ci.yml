@@ -1,0 +1,58 @@
+name: Test
+
+on:
+  # Build the nightly version at at 8:20 AM UTC
+  schedule:
+    - cron: "20 8 * * *"
+
+  # For all pushes to the main branch run the tests and push the image to the
+  # GitHub Container Registry under an edge tag
+  push:
+    branches:
+      - master
+      - develop
+
+  # For all PRs to the develop branch run the tests
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        node:
+          - 14
+          - 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setting up NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Get npm cache directory path
+        id: npm-cache-dir-path
+        run: echo "::set-output name=dir::$(npm config get cache)"
+
+      - name: Cache dependencies
+        id: npm-cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: npm ci --quiet
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test
