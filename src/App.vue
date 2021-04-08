@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <img alt="Vue logo" src="./assets/img/logo.png" class="inline-block" />
   <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
 </template>
 
@@ -15,13 +15,10 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="postcss">
+body {
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  @apply antialiased min-h-screen text-gray-500 bg-white text-center pt-16;
 }
 </style>

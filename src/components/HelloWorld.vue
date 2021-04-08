@@ -32,7 +32,12 @@
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
   </p>
 
-  <button @click="count++">count is: {{ count }}</button>
+  <button
+    class="px-5 py-2 bg-blue-500 border border-blue-700 rounded-sm hover:bg-blue-600 text-white my-10"
+    @click="count++"
+  >
+    count is: {{ count }}
+  </button>
   <p>
     Edit
     <code>components/HelloWorld.vue</code>
@@ -57,20 +62,16 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 a {
-  color: #42b983;
+  @apply text-blue-500;
 }
 
 label {
-  margin: 0 0.5em;
-  font-weight: bold;
+  @apply my-0 mx-0.5 font-bold;
 }
 
 code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
+  @apply bg-gray-200 rounded-sm px-1 py-0.5 text-gray-600;
 }
 </style>
