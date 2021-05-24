@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "test": "vite --config vite.config.test.ts",
+    "test": "vite --mode testing",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,vue,css,html,json}'",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue",
     "lint:fix": "npm run lint -- --fix"

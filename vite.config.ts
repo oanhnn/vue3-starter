@@ -1,7 +1,15 @@
-import { defineConfig } from 'vite'
+import { Plugin, UserConfigFn } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import test from 'vite-plugin-test'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-})
+const defineConfig: UserConfigFn = ({ mode }) => {
+  const plugins: Plugin[] = [vue()]
+
+  if (mode === 'testing') {
+    plugins.push(test())
+  }
+
+  return { plugins }
+}
+
+export default defineConfig

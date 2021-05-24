@@ -33,7 +33,16 @@
   </p>
 
   <button
-    class="px-5 py-2 bg-blue-500 border border-blue-700 rounded-sm hover:bg-blue-600 text-white my-10"
+    class="
+      px-5
+      py-2
+      bg-blue-500
+      border border-blue-700
+      rounded-sm
+      hover:bg-blue-600
+      text-white
+      my-10
+    "
     @click="count++"
   >
     count is: {{ count }}
