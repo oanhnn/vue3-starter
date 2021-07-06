@@ -54,4 +54,8 @@ jobs:
         run: npm run lint
 
       - name: Run tests
-        run: npm run test
+        run: npm run test:unit
+
+      # - uses: microsoft/playwright-github-action@v1
+      # - name: Run your tests
+      #   run: npm run test:e2e
