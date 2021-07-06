@@ -6,39 +6,37 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/vue3-recommended',
+    'eslint:recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
-    '@vue/standard',
+    'plugin:vue/vue3-recommended',
     '@vue/typescript/recommended',
-    '@vue/prettier/recommended',
-    '@vue/prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
     ecmaVersion: 'esnext',
     sourceType: 'module',
   },
-  plugins: ['import', 'prettier', '@typescript-eslint', 'vue'],
+  plugins: ['import'],
   rules: {
     'import/order': 'error',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'prettier/prettier': 'warn',
   },
   settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
+    'import/extensions': ['.vue', '.js', '.jsx', '.mjs', '.ts', 'tsx', '.json'],
     'import/resolver': {
-      typescript: {},
       alias: {
         map: [['@', './src']],
-        extensions: ['.vue', '.ts', '.js', '.json'],
       },
+      // this loads <rootdir>/tsconfig.json to eslint
+      typescript: {},
     },
   },
   overrides: [
     {
-      files: ['./tests/**/*.spec.ts'],
+      files: ['./tests/unit/**/*.spec.ts'],
       env: { mocha: true },
       plugins: ['mocha'],
       extends: ['plugin:mocha/recommended'],

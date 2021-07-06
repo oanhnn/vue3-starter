@@ -33,6 +33,7 @@
   </p>
 
   <button
+    type="button"
     class="
       px-5
       py-2
