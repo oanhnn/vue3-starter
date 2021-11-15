@@ -2,7 +2,6 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2021: true,
     node: true,
   },
   extends: [
@@ -10,10 +9,11 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:vue/vue3-recommended',
-    '@vue/typescript/recommended',
     'plugin:prettier/recommended',
   ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaVersion: 'esnext',
     sourceType: 'module',
   },
@@ -36,7 +36,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['./tests/unit/**/*.spec.ts'],
+      files: ['./tests/**/*.spec.ts'],
       env: { mocha: true },
       plugins: ['mocha'],
       extends: ['plugin:mocha/recommended'],
