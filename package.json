@@ -1,12 +1,12 @@
 {
   "name": "vue3-starter",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "test": "vite --mode testing",
+    "test": "web-test-runner --config test.config.mjs",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,vue,css,html,json}'",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue",
     "lint:fix": "npm run lint -- --fix"
@@ -15,9 +15,9 @@
     "vue": "^3.2.22"
   },
   "devDependencies": {
+    "@esm-bundle/chai": "^4.3.4-fix.0",
     "@tailwindcss/forms": "^0.3.4",
     "@tailwindcss/typography": "^0.4.0",
-    "@types/chai": "^4.2.15",
     "@types/mocha": "^9.0.0",
     "@types/node": "^14.17.33",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
@@ -25,6 +25,9 @@
     "@vitejs/plugin-vue": "^1.9.4",
     "@vue/compiler-sfc": "^3.2.22",
     "@vue/test-utils": "^2.0.0-rc.16",
+    "@web/dev-server-esbuild": "^0.2.16",
+    "@web/test-runner": "^0.13.22",
+    "@web/test-runner-playwright": "^0.8.8",
     "autoprefixer": "^10.2.5",
     "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.1.0",
@@ -39,11 +42,10 @@
     "postcss-import": "^14.0.0",
     "postcss-nested": "^5.0.5",
     "prettier": "^2.2.1",
-    "puppeteer": "^8.0",
     "tailwindcss": "^2.2.19",
     "typescript": "~4.4.4",
     "vite": "^2.6.14",
-    "vite-plugin-test": "^0.0.5",
+    "vite-web-test-runner-plugin": "^0.1.0",
     "vue-tsc": "^0.29.5"
   }
 }
