@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { expect } from '@esm-bundle/chai'
-import App from '../src/App.vue'
+import App from '@/App.vue'
 
 describe('App.spec.js', function () {
   it('renders', async function () {

@@ -16,6 +16,9 @@ const defineConfig: UserConfigFn = ({ mode }) => {
         '@/': path.join(__dirname, 'src/'),
       },
     },
+    optimizeDeps: {
+      include: ['@esm-bundle/chai', '@vue/test-utils'],
+    },
   }
 }
 
