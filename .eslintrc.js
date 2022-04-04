@@ -34,12 +34,9 @@ module.exports = {
       typescript: {},
     },
   },
-  overrides: [
-    {
-      files: ['./tests/**/*.spec.ts'],
-      env: { mocha: true },
-      plugins: ['mocha'],
-      extends: ['plugin:mocha/recommended'],
-    },
-  ],
+  // overrides: [
+  //   {
+  //     files: ['./tests/**/*.spec.ts'],
+  //   },
+  // ],
 }

@@ -1,10 +1,11 @@
 import { mount } from '@vue/test-utils'
-import { expect } from '@esm-bundle/chai'
+import { describe, expect, test } from 'vitest'
 import App from '@/App.vue'
 
-describe('App.spec.js', function () {
-  it('renders', async function () {
-    const wrapper = await mount(App, { attachTo: '#app' })
-    expect(wrapper.html()).to.contain('Hello')
+describe('App', () => {
+  test('render', async () => {
+    const wrapper = await mount(App)
+    expect(wrapper.text()).toContain('Hello')
+    expect(wrapper.html()).toMatchSnapshot()
   })
 })
