@@ -16,7 +16,10 @@ export default defineConfig({
       const testRootDir = path.join(__dirname, 'tests', 'units')
       const snapRootDir = path.join(__dirname, 'tests', 'units', '__snapshots__')
 
-      return testPath.replace(testRootDir, snapRootDir).concat(snapExtension)
+      return testPath
+        .replace(testRootDir, snapRootDir)
+        .replace(/\.(spec|test)\.(js|ts)$/, '')
+        .concat(snapExtension)
     },
   },
 })
