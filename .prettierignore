@@ -6,7 +6,3 @@ vendor/**/*
 # Ignore built files
 dist/**/*
 tests/units/__snapshots__/**/*
-
-# Config
-# *.config.js
-# *rc.js

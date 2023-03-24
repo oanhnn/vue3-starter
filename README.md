@@ -13,8 +13,10 @@
 - [x] Setup with TailwindCSS and JIT
 - [x] Setup with Typescript
 - [x] Setup with ESlint and Prettier
-- [x] Setup testing with @web/test-runner and Playwright
-- [x] Setup Github Workflows for CI and release
+- [x] Setup testing with Vitest
+- [ ]] Setup testing with Playwright
+- [x] Setup Github Workflows for CI and Release
+- [x] Dockerize for static site
 
 
 ## Development

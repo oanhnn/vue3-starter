@@ -9,11 +9,14 @@ export default defineConfig({
       '@/': path.join(__dirname, 'src/'),
     },
   },
-  optimizeDeps: {
-    include: ['@esm-bundle/chai', '@vue/test-utils'],
-  },
   test: {
-    global: true,
-    environment: 'happy-dom',
+    globals: true,
+    environment: 'jsdom',
+    resolveSnapshotPath: (testPath: string, snapExtension: string): string => {
+      const testRootDir = path.join(__dirname, 'tests', 'units')
+      const snapRootDir = path.join(__dirname, 'tests', 'units', '__snapshots__')
+
+      return testPath.replace(testRootDir, snapRootDir).concat(snapExtension)
+    },
   },
 })
