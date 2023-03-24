@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: master
+    assignees:
+      - oanhnn
+    reviewers:
+      - oanhnn
+    schedule:
+      day: friday
+      interval: daily
+      timezone: 05:00 UTC
+
+  - package-ecosystem: docker
+    directory: /
+    target-branch: master
+    assignees:
+      - oanhnn
+    reviewers:
+      - oanhnn
+    schedule:
+      day: friday
+      interval: daily
+      timezone: 05:00 UTC
+
+  - package-ecosystem: npm
+    directory: /
+    target-branch: master
+    assignees:
+      - oanhnn
+    reviewers:
+      - oanhnn
+    schedule:
+      day: friday
+      interval: daily
+      timezone: 05:00 UTC

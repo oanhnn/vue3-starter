@@ -10,15 +10,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         node:
-          - 14
+          - 18
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Prepare
         id: prepare
@@ -28,27 +28,35 @@ jobs:
             # Strip "v" prefix from tag name
             VERSION=$(echo $VERSION | sed -e 's/^v//')
           fi
-          echo ::set-output name=version::${VERSION}
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+
       - name: Setting up NodeJS
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Get npm cache directory path
-        id: npm-cache-dir-path
-        run: echo "::set-output name=dir::$(npm config get cache)"
-
-      - name: Cache dependencies
-        id: npm-cache
-        uses: actions/cache@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
         with:
-          path: ${{ steps.npm-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: npm ci --quiet
+        run: pnpm install
 
       - name: Run build
         run: npm run build
@@ -56,23 +64,23 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: v${{ steps.prepare.outputs.version }}
+          name: v${{ steps.prepare.outputs.VERSION }}
           path: dist
 
   dockerize:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - build
     env:
-      DOCKER_IMAGE: oanhnn/example-vue3-vite2-tailwind2
+      DOCKER_IMAGE: ghcr.io/oanhnn/vue3-starter
     strategy:
       fail-fast: false
       matrix:
         node:
-          - 14
+          - 18
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Prepare
         id: prepare
@@ -82,15 +90,14 @@ jobs:
             # Strip "v" prefix from tag name
             VERSION=$(echo $VERSION | sed -e 's/^v//')
           fi
-          TAGS="${DOCKER_IMAGE}:${VERSION}"
-          echo ::set-output name=version::${VERSION}
-          echo ::set-output name=tags::${TAGS}
-          echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          echo "TAGS=${DOCKER_IMAGE}:${VERSION}" >> $GITHUB_OUTPUT
+          echo "CREATED=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
       - name: Download artfact
         uses: actions/download-artifact@v2
         with:
-          name: v${{ steps.prepare.outputs.version }}
+          name: v${{ steps.prepare.outputs.VERSION }}
           path: dist
 
       - name: Setting up QEMU
@@ -103,7 +110,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Cache Docker layers
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
@@ -126,11 +133,11 @@ jobs:
           context: .
           file: ./Dockerfile
           labels: |
-            org.opencontainers.image.title='The example vite2 + vue3 + tailwind2 Docker image'
+            org.opencontainers.image.title='The example vite4 + vue3 + tailwind2'
             org.opencontainers.image.authors=oanhnn
-            org.opencontainers.image.created=${{ steps.prepare.outputs.created }}
+            org.opencontainers.image.created=${{ steps.prepare.outputs.CREATED }}
             org.opencontainers.image.source=${{ github.repositoryUrl }}
-            org.opencontainers.image.version=${{ steps.prepare.outputs.version }}
+            org.opencontainers.image.version=${{ steps.prepare.outputs.VERSION }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=${{ github.event.repository.license.name }}
           platforms: |
@@ -138,7 +145,7 @@ jobs:
             linux/arm64
           pull: true
           push: true
-          tags: ${{ steps.prepare.outputs.tags }}
+          tags: ${{ steps.prepare.outputs.TAGS }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

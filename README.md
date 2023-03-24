@@ -1,5 +1,5 @@
 <p align="center">
-  <h3 align="center">Starter with Vite 2 + Vue 3 + TailwindCSS</h3>
+  <h3 align="center">Starter with Vite 4 + Vue 3 + TailwindCSS</h3>
   <p align="center">
     Start a new project really fast with great defaults. 🚀
     <br>
@@ -8,7 +8,7 @@
 
 ## Features
 
-- [x] Setup with Vite 2
+- [x] Setup with Vite 4
 - [x] Setup with Vue 3
 - [x] Setup with TailwindCSS and JIT
 - [x] Setup with Typescript
