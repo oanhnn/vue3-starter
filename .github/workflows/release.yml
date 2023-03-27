@@ -132,6 +132,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
           context: .
           file: ./Dockerfile
+          target: deploy-ci
           labels: |
             org.opencontainers.image.title='The example vite4 + vue3 + tailwind2'
             org.opencontainers.image.authors=oanhnn

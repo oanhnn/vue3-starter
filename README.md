@@ -14,7 +14,7 @@
 - [x] Setup with Typescript
 - [x] Setup with ESlint and Prettier
 - [x] Setup testing with Vitest
-- [ ]] Setup testing with Playwright
+- [ ] Setup testing with Playwright
 - [x] Setup Github Workflows for CI and Release
 - [x] Dockerize for static site
 
