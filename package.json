@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
+    "build:docker": "pnpm run build && docker build --tag=oanhnn/vue3-starter --target=deply .",
     "serve": "vite preview",
     "test": "vitest --run",
     "coverage": "vitest --run --coverage",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,vue,css,html,json}'",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.vue",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "pnpm run lint -- --fix"
   },
   "dependencies": {
     "@formkit/vue": "1.2.2",

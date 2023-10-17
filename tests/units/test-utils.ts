@@ -1,7 +1,7 @@
 // test-utils.js
 import { createApp } from 'vue'
 
-export function withSetup(composable) {
+export function withSetup(composable: CallableFunction) {
   let result
   const app = createApp({
     setup() {

@@ -8,9 +8,12 @@ updates:
     reviewers:
       - oanhnn
     schedule:
-      day: friday
-      interval: daily
-      timezone: 05:00 UTC
+      interval: weekly
+      day: monday
+      time: "12:00"
+      timezone: Asia/Ho_Chi_Minh
+    labels:
+      - dependencies
 
   - package-ecosystem: docker
     directory: /
@@ -20,9 +23,12 @@ updates:
     reviewers:
       - oanhnn
     schedule:
-      day: friday
-      interval: daily
-      timezone: 05:00 UTC
+      interval: weekly
+      day: monday
+      time: "12:00"
+      timezone: Asia/Ho_Chi_Minh
+    labels:
+      - dependencies
 
   - package-ecosystem: npm
     directory: /
@@ -32,6 +38,9 @@ updates:
     reviewers:
       - oanhnn
     schedule:
-      day: friday
-      interval: daily
-      timezone: 05:00 UTC
+      interval: weekly
+      day: monday
+      time: "12:00"
+      timezone: Asia/Ho_Chi_Minh
+    labels:
+      - dependencies

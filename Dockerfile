@@ -1,15 +1,18 @@
 ### Stage: base
 FROM node:18-alpine AS base
 
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
 WORKDIR /app
-RUN npm i -g pnpm
 
 
 ### Stage: dependencies
 FROM base AS dependencies
 
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 
 ### Stage: build
