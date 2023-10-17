@@ -1,6 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
-module.exports = {
+export default {
   mode: 'jir',
   content: ['./public/**/*.{php,html}', './src/**/*.{js,jsx,ts,tsx,vue}'],
   darkMode: 'media', // false or 'media' or 'class'
@@ -11,10 +11,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/line-clamp'),
-  ],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('@tailwindcss/aspect-ratio')],
 }

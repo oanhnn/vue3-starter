@@ -25,7 +25,7 @@ module.exports = {
     'prettier/prettier': 'warn',
   },
   settings: {
-    'import/extensions': ['.vue', '.js', '.jsx', '.mjs', '.ts', 'tsx', '.json'],
+    'import/extensions': ['.vue', '.js', '.jsx','.mjs', '.cjs', '.ts', 'tsx', '.json'],
     'import/resolver': {
       alias: {
         map: [['@', './src']],
