@@ -80,7 +80,7 @@ jobs:
           - 18
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Prepare
         id: prepare
@@ -95,7 +95,7 @@ jobs:
           echo "CREATED=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
       - name: Download artfact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: v${{ steps.prepare.outputs.VERSION }}
           path: dist
