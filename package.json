@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@formkit/vue": "1.2.2",
-    "vue": "^3.3.7"
+    "vue": "^3.3.9"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
