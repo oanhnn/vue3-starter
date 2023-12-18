@@ -129,7 +129,7 @@ jobs:
         id: test
         run: pnpm run test:e2e
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ failure() && steps.test.conclusion == 'failure' }}
         with:
           name: playwright-report--${{ steps.prepare.outputs.VERSION }}
