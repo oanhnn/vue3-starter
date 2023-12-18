@@ -63,7 +63,7 @@ jobs:
         run: pnpm run build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: v${{ steps.prepare.outputs.VERSION }}
           path: dist
@@ -96,7 +96,7 @@ jobs:
           echo "CREATED=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
       - name: Download artfact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: v${{ steps.prepare.outputs.VERSION }}
           path: dist
