@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>{{ props.msg }}</h1>
 
   <p>
     Recommended IDE setup:
@@ -39,23 +39,18 @@
   </p>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import { useCounter } from '@/composables/counter'
 
-export default defineComponent({
-  name: 'HelloWorld',
-  props: {
-    msg: {
-      type: String,
-      required: true,
-    },
-  },
-  setup: () => {
-    const { count, increment } = useCounter()
-    return { count, increment }
-  },
+export interface Props {
+  msg?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  msg: '',
 })
+
+const { count, increment } = useCounter()
 </script>
 
 <style lang="postcss" scoped>

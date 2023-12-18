@@ -5,21 +5,22 @@ on:
   schedule:
     - cron: "20 8 * * *"
 
-  # For all pushes to the main branch run the tests and push the image to the
-  # GitHub Container Registry under an edge tag
+  # For all pushes to the main and development branch
   push:
     branches:
       - master
       - develop
 
-  # For all PRs to the develop branch run the tests
+  # For all PRs to the main and development branch
   pull_request:
     branches:
+      - master
       - develop
 
 jobs:
-  test:
-    runs-on: ubuntu-22.04
+  test-unit:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -54,9 +55,9 @@ jobs:
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-node-${{ matrix.node }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-node-${{ matrix.node }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install
@@ -64,5 +65,73 @@ jobs:
       - name: Run lint
         run: pnpm run lint
 
-      - name: Run tests
-        run: pnpm run test
+      - name: Run unit tests
+        run: pnpm run test:unit
+
+  test-e2e:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node:
+          - 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare
+        id: prepare
+        run: |
+          # Remove refs/ prefix
+          VERSION=${VERSION#refs/}
+          # Replace all / by -
+          VERSION=${VERSION//\//-}
+          # Output
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Setting up NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-node-${{ matrix.node }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run build
+        run: pnpm run build
+
+      - name: Run e2e tests
+        id: test
+        run: pnpm run test:e2e
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ failure() && steps.test.conclusion == 'failure' }}
+        with:
+          name: playwright-report--${{ steps.prepare.outputs.VERSION }}
+          path: playwright-report/
+          retention-days: 7
